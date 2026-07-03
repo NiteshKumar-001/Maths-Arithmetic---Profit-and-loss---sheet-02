@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maths(Arithmetic) - Profit and loss - sheet-02</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: transparent;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-header h1 {
+            color: #111827;
+            font-size: 28px;
+        }
+
+        /* Question Card Styling */
+        .question-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 16px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .exam-tag {
+            color: #d97706;
+            font-size: 14px;
+            font-weight: 700;
+            display: block;
+            margin-top: 8px;
+        }
+
+        /* 2x2 Grid for Options */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-btn {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 14px 16px;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            color: #374151;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #f3f4f6;
+            border-color: #d1d5db;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+        }
+
+        /* Correct and Wrong States */
+        .option-btn.correct {
+            background-color: #dcfce7;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .option-btn.wrong {
+            background-color: #fee2e2;
+            border-color: #fca5a5;
+            color: #991b1b;
+        }
+
+        .feedback-box {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 6px;
+            background-color: #eff6ff;
+            color: #1e3a8a;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
+
+        /* Submit Section Styling */
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .submit-btn {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .final-score-container {
+            display: none;
+            background-color: #10b981;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="quiz-header">
+        <h1>Maths(Arithmetic) - Profit and loss - sheet-02</h1>
+        <p style="color: #6b7280; font-size: 14px; margin-top: -10px;"></p>
+    </div>
+
+    <div id="quiz-list"></div>
+
+    <div class="submit-section">
+        <button class="submit-btn" id="submit-btn" onclick="showFinalScore()">Submit Quiz</button>
+        <div class="final-score-container" id="final-score-container">
+            Your Final Score: <span id="final-score">0</span> / <span id="total-score">99</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data extracted from Profit and Loss Sheet - 2 (English version only)
+    const quizData = [
+        { q: "1. A shopkeeper buys oranges at the rate of 10 oranges for 50 and sells them at the rate of 12 oranges for 74. Find his gain or loss percentage.", exam: "(SSC CPO 2024)", options: ["23 1/3% gain", "25% gain", "30% loss", "25 1/3% loss"], correct: 0 },
+        { q: "2. If Naman had purchased 25 articles for Rs. 22 and sold all the articles at the rate of 22 for Rs. 25, then find his approximate profit percentage.", exam: "(IB ACIO GRADE-2 2023)", options: ["21.5%", "20.5%", "29.1%", "30.2%"], correct: 2 },
+        { q: "3. A merchant buys 'a' number of goods for Rs.b and sells 'b' number of goods for Rs.a. If b<a, then in the whole outlay, he makes:", exam: "", options: ["100(a²-b²)/b² % gain", "100(a²-b²)/b² % loss", "100(b²-a²)/b² % loss", "100(b²-a²)/b² % gain"], correct: 0 },
+        { q: "4. A vendor buys 20 pens for Rs. 15 and sells them at 15 for Rs. 20. How many pens should be bought and sold to earn a profit of Rs. 245?", exam: "[SSC Selection Post (Phase-XII)]", options: ["320", "280", "420", "540"], correct: 2 },
+        { q: "5. Some fruits are bought at a rate of 11 for 100 rupees and an equal number at a rate of 9 for 100 rupees. If all the fruits are sold at a rate of 10 for 100 rupees, then what is the gain or loss percent in the entire transaction?", exam: "", options: ["Gain, 5%", "Loss, 5%", "Gain, 1%", "Loss, 1%"], correct: 3 },
+        { q: "6. A man buys an article at 16 for 1,200 and an equal number of articles at 12 for 960. He sells all the articles at 15 for 1,350. His profit percentage in the entire transaction is (correct to one decimal place):", exam: "", options: ["14.8%", "15.8%", "15.2%", "16.1%"], correct: 0 },
+        { q: "7. The costs of two watches were in the ratio 16:23. The cost of first watch increases by 10% and that of second by Rs. 477. Now the costs of two watches are in the ratio of 11: 20. The price of the second watch in the beginning was?", exam: "", options: ["Rs.932", "Rs.1219", "Rs.1696", "Rs.848"], correct: 1 },
+        { q: "8. The cost price of two articles A and B are in the ratio 4: 5. While selling these articles, the shopkeeper gains 10% on A and 20% on B, and the difference in the two selling prices is 960. The total selling price (in ₹) of both the articles is:", exam: "", options: ["6,240", "5,120", "5,400", "6,000"], correct: 0 },
+        { q: "9. If the selling price is tripled, the profit goes up to 5 times. Find the profit.", exam: "(UP Constable 27/01/2019 1st Shift)", options: ["80%", "100%", "125%", "150%"], correct: 1 },
+        { q: "10. If the selling price of a bed is 2-times of initial, then the profit is 7-times of initial. Find the initial profit percentage (in %).", exam: "(RRB NTPC GRADUATE LEVEL 2025)", options: ["250", "20", "28.57", "350"], correct: 1 },
+        { q: "11. If SP becomes half, then loss becomes 3 times its initial value, the find the loss %.", exam: "", options: ["20%", "12.5%", "15%", "25%"], correct: 0 },
+        { q: "12. A shopkeeper sells a product at some loss. If he reduces the selling price of the product by 5 percent, his loss increases by 4 percent. At what loss percent he sells his product?", exam: "", options: ["40%", "35%", "55.55%", "63.63%"], correct: 2 },
+        { q: "13. Ayush buys an old digital camera for 9,200 and spends 1,200 on its repair. If Ayush sells the digital camera for 12,000, what is his profit percentage (correct up to two decimal places)?", exam: "(DP CONSTABLE 2023)", options: ["17.39%", "13.58%", "15.38%", "19.73%"], correct: 2 },
+        { q: "14. Sushma purchased a used car for 1,20,000 and spent 28,500 on its repairs. She then sold it to her friend Sam for 1,38,600. What percentage did she gain or lose? (Round off your answer to two decimal places.)", exam: "[RRB GROUP-D 2025]", options: ["6.67% loss", "8.67% loss", "6.67% gain", "8.67% gain"], correct: 0 },
+        { q: "15. Akhil bought a flat for Rs. 1550000. He spent Rs. 50000 on its painting and repair. If he sold it for Rs. 1512000, then what is his loss percentage?", exam: "", options: ["5.5%", "8.5%", "7.5%", "6.5%"], correct: 3 },
+        { q: "16. A shopkeeper purchased an article for 7,200 and spent 9% of its cost on repairs. He sold it to Rajan for 8,100. What was the profit percentage on selling the article? (Rounded off to 2 decimal places)", exam: "(SSC SELECTION POST XII MATRICULATION LEVEL)", options: ["3.21%", "3.12%", "12.5%", "2.91%"], correct: 0 },
+        { q: "17. A car dealer purchased a car for 1,08,500 and spent some amount on its maintenance. He sold it for 1,56,250, thereby earning a profit of 25%. How much money did he spend on the maintenance of the car?", exam: "", options: ["₹16,500", "₹47,750", "₹20,625", "₹8,687.5"], correct: 0 },
+        { q: "18. Manjeet bought a second-hand motorbike for 22,000 and spent 3,000 on its overhauling and maintenance. He then sold it with 12% profit. If he had sold it for 500 less, then what would have been his profit percentage?", exam: "", options: ["10.5%", "10%", "5%", "8%"], correct: 1 },
+        { q: "19. A person sold two cars for ₹60,000 each. On one, he gained 20% while on the other he lost 20%. Find the percentage of his gain or loss.", exam: "(SSC CPO 2023)", options: ["No profit and no loss", "Loss 4%", "Loss 2%", "Gain 4%"], correct: 1 },
+        { q: "20. A shopkeeper sold two articles for 9639 each. On one, he gained 19% and on the other, he lost 19%. What is the overall percentage gain or loss?", exam: "", options: ["3.81% loss", "3.61% gain", "3.81% gain", "3.61% loss"], correct: 3 },
+        { q: "21. Gill sold two dogs at the same price. In one, he gets a profit of 22% and in the other, he gets a loss of 22%. What is Gill's profit or loss percentage?", exam: "(SSC GD 2025)", options: ["4.4% profit", "4.84% loss", "4.84% profit", "4.4% loss"], correct: 1 },
+        { q: "22. Two articles were sold for Rs. 1200 each. First was sold at 8.5% loss and second at 8.5% profit. Find overall profit or loss %?", exam: "", options: ["0.7225% loss", "0.8125% loss", "0.6325% loss", "0.9025% loss"], correct: 0 },
+        { q: "23. A house and a shop were sold for Rs. 2 lacs each, in this transaction, the house sale resulted into 10% loss whereas the shop sale into 10% profit. The entire transaction resulted in?", exam: "", options: ["No loss no gain", "Loss of 5/66 lacs", "Loss of 4/99 lacs", "Loss of 5/88 lacs"], correct: 2 },
+        { q: "24. A man sells two cows for Rs. 15,640 each, gaining 15% on one and losing 15% on the other. Find his total gain or loss.", exam: "(SSC CGL 2022)", options: ["Rs.720 loss", "Rs.360 loss", "Rs.720 gain", "Rs.360 gain"], correct: 0 },
+        { q: "25. Last year Mr. A bought two paintings. This year he sold them for Rs. 20,000 each. On one, he made a 25% profit and on the other he had a 25% loss, then his net profit/loss %?", exam: "", options: ["He lost more than Rs.2700", "He lost less than Rs.2700", "He earned more than Rs.2900", "He earned more than Rs.2500"], correct: 1 },
+        { q: "26. A dealer sells two dryers at the rate of 63,000 per dryer. On one, he earns a profit of 5% and on the other he loses 30%. What is his loss percentage in the whole transaction?", exam: "(RRB NTPC GRADUATE LEVEL 2025 CBT-1)", options: ["14%", "17%", "15%", "16%"], correct: 3 },
+        { q: "27. Two articles are sold for rupees 10,005 each. On one, the seller gains 15% and on the other, he loses 13%. What is his overall gain or loss percent, correct to two decimal places?", exam: "", options: ["1.42% gain", "1.42% loss", "0.94% loss", "0.94% gain"], correct: 2 },
+        { q: "28. A shopkeeper sold two articles for 10591 each. On one he gained 19% and on the other he lost 11%. What was his overall gain or loss percent (correct to one decimal place)?", exam: "", options: ["Loss 2.7%", "Loss 10%", "Profit 5%", "Profit 1.8%"], correct: 3 },
+        { q: "29. Two articles are sold for rupees 10,384 each, the seller gains 18% on one and on the other, he loss 12%. What is his overall gain or loss?", exam: "", options: ["Rs. 178 loss", "Rs. 178 gain", "Rs. 168 gain", "Rs. 168 loss"], correct: 2 },
+        { q: "30. The first shirt is sold at twice the selling price of the second shirt. The first shirt is sold at 8% profit and the second shirt is sold at a 3% loss. What is the overall percentage profit on the shirts (Rounded off to two decimal place)?", exam: "(SSC CPO 2023)", options: ["4.60%", "4.07%", "3.86%", "4.86%"], correct: 1 },
+        { q: "31. A shopkeeper sold 3 wristwatches for Rs. 2,800 each. If he has sold the watches with 40%, 25% and 12% profit, respectively, then find his overall profit percentage (correct to 2 decimal places).", exam: "(SSC CPO 2024)", options: ["0.2419", "0.2463", "0.2455", "0.2475"], correct: 1 },
+        { q: "32. X sold two cars at the same price, one of them at 10% profit. X incurred a total loss of 12% in the overall transaction. What was the approximate% of profit/loss incurred on the other car?", exam: "", options: ["25% loss", "26.66% loss", "23.33% loss", "24.16% loss"], correct: 1 },
+        { q: "33. A man sold two TV sets for 7,200 each, neither incurring a gain nor a loss. If he sold one TV set at a profit of 12 1/2% then the other TV set is sold at a loss of:", exam: "(SSC MTS 2022)", options: ["8.5%", "9%", "8%", "10%"], correct: 3 },
+        { q: "34. Shashi sells two articles for 5,000 each with no loss and no profit in the overall transaction. If one article is sold at 16 2/3% loss, then the other is sold at a profit of:", exam: "", options: ["24%", "25%", "16 2/3%", "18 1/3%"], correct: 1 },
+        { q: "35. A man sells three articles X, Y and Z for Rs. 2520 each. He sells article X at 30% loss, article Y at 36.36% profit if there is no profit nor loss in whole transaction. Find the CP of article Z?", exam: "", options: ["Rs. 2288", "Rs. 1408", "Rs. 2232", "Rs. 2112"], correct: 3 },
+        { q: "36. A shopkeeper sold two items. The selling price of the first item equals the cost price of the second item. He sold the first item a profit of 20% and the second item at a loss of 10%. What is his overall profit/loss percent?", exam: "", options: ["Loss 4 6/11%", "Profit 3 7/11%", "Profit 4 7/11%", "Loss 8 1/3%"], correct: 1 },
+        { q: "37. SP of a pen is Rs. 171. If profit % made on article is same as CP of article then find CP?", exam: "", options: ["75", "95", "90", "70"], correct: 2 },
+        { q: "38. The selling price of a pen is 24. If the numerical value of its cost price is equal to the numerical value of the profit percentage, what is the cost price?", exam: "", options: ["Rs. 30 or 70", "Rs. 80 or 20", "Rs. 60 or 40", "Rs. 90 or 10"], correct: 2 },
+        { q: "39. By selling an article for 131.25, a trader gains as much percent as the number representing the cost price of the article. In order to earn 40% profit, at what price (in ₹) should he sell the article?", exam: "", options: ["100", "140", "105", "75"], correct: 2 },
+        { q: "40. A grocer mixes two varieties of wheat and sells the mixture at Rs. 28 per kg to earn a profit of 25%. If the cost price of the first variety is twice that of the second, and he has mixed them in the ratio 2: 3, then find the price per kg of the cheaper variety.", exam: "", options: ["16", "18", "14", "20"], correct: 0 },
+        { q: "41. A person buys 15 tables and 26 chairs for 25,700. He sells the tables at 12% profit and chairs at 19% profit. If his total profit on selling all the tables and chairs is 4358 rupees. What is the cost price of 5 chairs and 4 tables?", exam: "", options: ["5700", "5000", "4800", "5500"], correct: 3 },
+        { q: "42. By selling 96 articles for Rs. 144 there is loss of 35%. How many articles should sell for Rs. 108 to get a profit of 17%?", exam: "", options: ["45", "40", "35", "50"], correct: 1 },
+        { q: "43. Reena sold 48 articles for 2160 rupees and suffered a loss of 10%. How many articles should she sell for 2016 rupees to earn a profit of 12%?", exam: "", options: ["36", "40", "28", "32"], correct: 0 },
+        { q: "44. Being selling 18 oranges for Rs. 151.20, a man loses 20%. How many oranges should he sell for Rs 819 to earn a profit of 30%?", exam: "(SSC GD 2021)", options: ["50", "60", "45", "65"], correct: 1 },
+        { q: "45. A dealer sold 6 sewing machines for 63000 with a profit of 5%. For how much should he sell 8 machines, if he intends to earn 15% profit?", exam: "", options: ["88200", "69300", "92000", "92400"], correct: 2 },
+        { q: "46. A seller has a loss of 19% on selling 455 bananas in 3510 rupees. What percent will he gain on selling 504 bananas in 5328 rupees?", exam: "", options: ["10%", "11%", "9%", "13%"], correct: 1 },
+        { q: "47. An electronics store orders 150 portable speakers at a cost of ₹400 each. The owner plans to price them so that selling only 120 speakers would guarantee a 40% profit on the total investment. However, a local event leads to the sale of 135 speakers. If the remaining speakers have no resale value, calculate the store's actual profit percentage on the total investment.", exam: "(SSC CGL 2025 PRE)", options: ["52.2%", "53.5%", "62.8%", "57.5%"], correct: 3 },
+        { q: "48. Twelve percent of bananas bought by a fruit vendor got lost during transportation. On selling the remaining bananas, the vendor's overall profit turned out to be 4%. If the vendor had not lost any bananas and had sold them at the price of the remaining bananas, what would have been his profit percentage?", exam: "", options: ["17 4/11%", "19 1/11%", "18 2/11%", "22 2/9%"], correct: 2 },
+        { q: "49. Sukhen purchased some perishable items for sale but 15% of those items could not be sold and went bad. However, Sukhen managed to sell the rest of the items at a price that helped him earn an overall profit of 19%. At what percentage above the cost price of each item did Sukhen sell each of the items that did not go bad?", exam: "(CHSL 2023 PRE)", options: ["40%", "42%", "34%", "36%"], correct: 0 },
+        { q: "50. A sold a tape-recorder to B for Rs. 4,860 at a loss of 19%. Again B sold it to C at price that would give A a profit of 17%. The gain % of B is?", exam: "", options: ["22 2/9%", "33 1/3%", "44 4/9%", "66 2/3%"], correct: 2 },
+        { q: "51. Bina sells an article to Shyam at a 19% loss for 4,860. Shyam then sells it to Hari for the price Bina would have needed to sell to make a 17% profit. What is Shyam's profit?", exam: "[RRB GROUP - D 2025]", options: ["2,520", "2,160", "1,260", "1,740"], correct: 1 },
+        { q: "52. Sudha sold an article to Renu for 576 rupees at a loss of 20%. Renu spent a sum of 224 rupees on its transportation and sold it to Raghu at a price which would have given Sudha a profit of 24%. The percentage of gain for Renu is:-", exam: "", options: ["13.2%", "11.6%", "10.5%", "12.9%"], correct: 1 },
+        { q: "53. Gopi purchased an article at 7/8 of its selling price. Had he sold it at 20% more than the selling price, then what would his profit percentage be?", exam: "(DP CONSTABLE 2023)", options: ["37 1/7%", "37%", "35%", "35 1/7%"], correct: 0 },
+        { q: "54. Ramesh buys an article for 15% less than its original value, and sells it for 10% more than its original value. Find the percentage of gain (approximately).", exam: "(RRB NTPC 13/01/2021 Evening)", options: ["25.62%", "41.52%", "31.25%", "29.41%"], correct: 3 },
+        { q: "55. Ravi bought a camera and paid 18% less than its original price. He sold it at 30% profit on the price he had paid. How much was the profit percentage earned by Ravi on the original price?", exam: "(RPF CONSTABLE 2025)", options: ["6.2%", "5.9%", "5.7%", "6.6%"], correct: 3 },
+        { q: "56. A merchant fixes the sale price of his goods at 33% above the cost price. He sells his goods at 23% less than the fixed price. His profit percentage is:", exam: "", options: ["2.14%", "4.12%", "1.24%", "2.41%"], correct: 1 },
+        { q: "57. Rehana bought an article for Rs. 1920 and spent Rs. 130 on its shipping. She sold it at 20% profit. From the money she got then, she bought another article and sold it at 15% loss. What is her overall loss/profit percentage?", exam: "(ICAR Technician 2022)", options: ["Profit, 2%", "Loss, 5%", "Loss, 2%", "Profit, 5%"], correct: 0 },
+        { q: "58. Sonam purchased a mobile phone for 27,000 and sold it at a loss of 19%. With that money she purchased a Tablet and sold it at a gain of 20%. What is her overall gain or loss?", exam: "(SSC SELECTION POST XI 2023)", options: ["gain of 870", "loss of 756", "loss of 856", "gain of 756"], correct: 1 },
+        { q: "59. An article is finally sold at a profit of 40% on its cost price, after passing through two dealers, A and B. If A earned a profit of 25%, then the profit percent earned by B is?", exam: "(ICAR Technician 2022)", options: ["12%", "15%", "12.5%", "15.5%"], correct: 0 },
+        { q: "60. A sold an article to B at 25% profit and B further sold it to C by earning a certain profit. If the cost price of C is 30% more than the cost price of A, then find the profit percentage earned by B.", exam: "(SSC CGL 2023 PRE)", options: ["5 1/2%", "4%", "5%", "4 1/2%"], correct: 1 },
+        { q: "61. The price of some wooden furniture increases by 65% when it passes through three hands. If the first and second sellers made a profit of 20% and 25%, respectively, then find the profit percentage of the third seller.", exam: "(SSC CGL 2022)", options: ["10%", "12.5%", "16%", "8%"], correct: 0 },
+        { q: "62. Manu purchased a microwave for 12,000 and sold it to Anuj at a loss of 12.5%. Anuj sold it to Rani at a profit of 20% and Rani sold to Priya at a profit of 6 2/3%. Find the price at which Priya purchased it.", exam: "[RRB GROUP-D 2025]", options: ["12,600", "13,340", "13,100", "13,440"], correct: 3 },
+        { q: "63. An iron costing Rs. 758 was sold by Ramesh at a gain of 15% and it was again sold by Reena, who bought it from Ramesh, at a loss of 8%. Find the selling price of the iron for Reena (correct to two places of decimals).", exam: "[SSC Selection Post (Phase-XII)]", options: ["Rs.808.69", "Rs.801.96", "Rs.810.96", "Rs.820.69"], correct: 1 },
+        { q: "64. Ketan bought a shirt and sold it to Mahesh at a profit of 5%. Mahesh sold it to David at a loss of 24%. If David paid 3990, then the cost price (in ₹) of the shirt Ketan bought is", exam: "(SSC GD 2025)", options: ["5150", "4800", "5000", "4750"], correct: 2 },
+        { q: "65. A sells a MacBook to B at a loss of 60% and B sells the MacBook to C at a profit of 25%. If C purchased the MacBook for 47,236, then what was the cost (in ₹) of the MacBook for A?", exam: "(RRB NTPC LEVEL 12th 2025)", options: ["94,467", "94,468", "94,472", "94,478"], correct: 2 },
+        { q: "66. An item is sold to C by B, and then to D by C. Both B and C earn an equal profit of 12%, and the selling price to D is 313.60. What is the cost price (in ₹) of the item to B?", exam: "[RRB GROUP-D 2025]", options: ["200", "240", "250", "280"], correct: 2 },
+        { q: "67. A sells a cycle to B at a profit of 33% and B sells it to C at a loss of 25%. If C bought the cycle for Rs 3059, then the cost price of it for A was?", exam: "(CHSL PRE 2023)", options: ["Rs.3066 2/3", "Rs.4054 1/3", "Rs.2044 1/3", "Rs.5014 2/3"], correct: 0 },
+        { q: "68. X sells an article to Y at 12% loss. Y sells it to Z at 9% profit. If Z pay 21,582 for it, then at what price (in ₹) was the article purchased by X?", exam: "", options: ["19,800", "23,275", "22,500", "21600"], correct: 2 },
+        { q: "69. The manufacturer of a table sells it to a wholesale dealer at a profit of 10%. The wholesale dealer sells the table to a retailer at a profit of 30%. Finally, the retailer sells it to a customer at a profit of 50%. If the customer pays Rs. 12870 for the table, then its manufacturing cost (in Rs.) is.", exam: "(CAT 2017)", options: ["4500", "6000", "7500", "9000"], correct: 1 },
+        { q: "70. The cost of an item increases successively by 20% and 30% and then decreases by 38%. If its final cost is Rs. 483.60, then its initial cost is?", exam: "", options: ["Rs. 480", "Rs. 500", "Rs. 520", "Rs. 600"], correct: 1 },
+        { q: "71. A manufacturer sells an item to a wholesale dealer at a profit of 11%. The wholesaler sells the same to a retailer at a profit of 15%. The retailer in turn sells it to a customer for 17,045, thereby earning a profit of 19%. The cost price of the manufacturer is (consider integral part only):", exam: "(CHSL 2021)", options: ["13,520", "15,020", "10,200", "11,220"], correct: 3 },
+        { q: "72. Mohan starts a business with a capital of Rs. 1,70,000. He incurs a loss of 4% during the first year. But he makes a profit of 5% during the second year on his remaining investment. Finally, he makes a profit of 25% on his new capital during the third year. Find his total profit at the end of three years.", exam: "", options: ["Rs.44,200", "Rs.43,200", "Rs.45,200", "Rs. 42,200"], correct: 0 },
+        { q: "73. A bought an article and spent Rs.550 on its repairs. He then sold it to B at a profit of 10%. B sold it to C at a loss of 20%. C finally sold it for Rs.6864 at a profit of 30%. How much did A pay for the article? (In Rs.)", exam: "(UP SI POLICE 2021)", options: ["5750", "5550", "5450", "5650"], correct: 2 },
+        { q: "74. A bought a cycle and sold it to B at a profit of 1,000. B sold it to C at 5% loss. C sold it to D for 10,450 at 10% profit. If D had bought the cycle directly from where A had bought, then how much amount (in ₹) would he have saved?", exam: "", options: ["450", "1,280", "1,450", "1,500"], correct: 2 },
+        { q: "75. A sells an article to B at 20% profit. B sells it to C at 15% loss. C sells it to D at 25% profit. If the difference between the profit of A and C is 132 and B bought the article for x, then what is the value of x?", exam: "", options: ["2,820", "3,060", "2,940", "2,880"], correct: 3 },
+        { q: "76. Prem sells an article to Ria at a profit of 20%. Ria sells the article back to Prem at a loss of 20%. In this transaction:", exam: "(RPF CONSTABLE 2025)", options: ["Ria makes a profit of 24%", "Ria incurs a loss of 12%", "Prem makes a profit of 24%", "Prem makes a profit of 12%"], correct: 2 },
+        { q: "77. Aarav owns a watch worth Rs. 10,000. He sells it to Bhavin at a profit of 15%. After some days, Bhavin sells it back to Aarav at 15% loss. Find the percentage profit or loss faced by Aarav.", exam: "(SSC CPO 2024)", options: ["17.25% loss", "17.25% profit", "18.25% profit", "18.75% loss"], correct: 1 },
+        { q: "78. An article worth Rs. 24000 was sold by A to B at 4% loss. B sold it back to A at 9% profit. In the entire transaction, what is the gain/loss percentage of A?", exam: "", options: ["Gain 5%", "Loss 2.4%", "Loss 8.64%", "Gain 5.4%"], correct: 2 },
+        { q: "79. The cost price of a car was Rs. 1,50,000 Raju sold it to Montoo at a profit of 5%, and later Montoo sold it back to Raju at 2% loss. Find the total profit or loss in the entire transaction?", exam: "(RRB NTPC 12/01/2021 Morning)", options: ["Raju's gain Rs. 3,150", "Raju's gain Rs. 4,500", "Raju's loss Rs. 4,350", "Raju's gain Rs. 4,350"], correct: 0 },
+        { q: "80. A flat worth 9,50,000 is sold by Lakshman to Bharath at 8% profit. If Bharath sells it back to Lakshman at 3% loss, then find the gain/loss (in ₹) of Lakshman in the entire transaction?", exam: "(SSC MTS 2024)", options: ["Lakshman gains 30,780", "Lakshman gains 50,200", "Lakshman gains 45,220", "Lakshman loses 45,220"], correct: 0 },
+        { q: "81. A watch is sold at a profit of 25%. If both the cost price and the selling price of the watch are decreased by 275, then the profit would be 30%. The original selling price (in ₹) of the watch is:", exam: "", options: ["552.60", "525.60", "526.50", "562.50"], correct: 3 },
+        { q: "82. An item is sold at a 20% profit. If the cost price and selling price are increased by Rs. 50 and Rs. 30 respectively, the profit percent becomes 10%. What is the original cost price?", exam: "(SSC CPO 2025)", options: ["Rs.100", "Rs.450", "Rs.600", "Rs.250"], correct: 3 },
+        { q: "83. An article is sold at 5% loss. If its cost price is decreased by Rs 20 and selling price is increased by Rs 13, then profit of 10% is earned on it. What is the original selling price of the article?", exam: "", options: ["Rs. 266.66", "Rs. 221.66", "Rs. 283.33", "Rs. 250"], correct: 1 },
+        { q: "84. An article is sold at a profit of 54%. If the cost price is increased by 275 and the selling price is reduced by 266, then the profit would be 40.8%. What is the original cost price (in ₹) of the article?", exam: "(RRB NTPC LEVE 12th 2025)", options: ["1,300", "1,000", "1,500", "1,400"], correct: 0 },
+        { q: "85. A milkman mixes water in pure blends milk and offers the mixture for sale at the original cost price of milk. If he mixes 0.75 liters of water in every 5.25 liters of milk and sells the entire mixture at the price of pure milk, what is his profit percentage?", exam: "", options: ["12.5%", "14.28%", "16.66%", "17.64%"], correct: 1 },
+        { q: "86. A milkman mixes water with milk he sells the mixture at CP of pure milk thus he gains 28.33%. In what ratio he mixes milk with water?", exam: "", options: ["60:17", "43:17", "77:17", "77:60"], correct: 0 },
+        { q: "87. A juice vendor mixes water with pure orange juice. If he sells the mixture at the cost price of pure orange juice and makes a profit of 20%, what is the ratio of water to pure orange juice in the mixture, respectively?", exam: "(SSC CGL 2025 PRE)", options: ["1:4", "1:5", "4:1", "5:1"], correct: 1 },
+        { q: "88. A milkman professes to sell his milk at cost price but he mixes it with water and thereby gains 40%. Find the percentage of water in the mixture (rounded to one decimal place).", exam: "(RPF CONSTABLE 2025)", options: ["28.6%", "27%", "27.5%", "28%"], correct: 0 },
+        { q: "89. A milk vendor bought 28 L of milk at the rate of Rs.8.50/L. After adding some water he sold the mixture at the same price. If his gain is 12.5%, how much water did he add?", exam: "(CDS 2018)", options: ["4.5 L", "4L", "3.5L", "3L"], correct: 2 },
+        { q: "90. A milkman sells the milk at the cost price but he mixes the water (freely available) in it and thus he gains 7.69%. The quantity of water in the mixture of 1L is?", exam: "", options: ["83.33ml", "90.90ml", "71.42ml", "69.33ml"], correct: 2 },
+        { q: "91. A dairy owner sells the paneer and claims to gain 12% and he also mixes 15% impurities in the paneer. Find the actual profit percentage earned by the owner.", exam: "", options: ["27%", "22.5%", "28.8%", "32.8%"], correct: 2 },
+        { q: "92. A milkman mixes water with milk he sells the mixture at 25% higher price than CP of pure milk thus he gains 40% find the ratio of milk and water(in mixture)?", exam: "", options: ["25:4", "30:7", "25:3", "25:2"], correct: 2 },
+        { q: "93. A dairy man pays Rs 6.4 per liter of milk. He then adds water in the milk and sells the mixture at Rs 8 per liter, thereby making a 37.5% profit. What is the proportion of water to milk, in milk received by the customers?", exam: "(UP CONSTABLE RE-EXAM 2024)", options: ["1:21", "1:10", "1:20", "1:15"], correct: 1 },
+        { q: "94. A milkman pays Rs.48/L of milk. He adds water and sells the mixer at Rs. 66/L, thereby making 60% profit. The proportion of water to milk received by the customer is?", exam: "", options: ["13:66", "11:45", "7:44", "9:55"], correct: 3 },
+        { q: "95. A man buys apples at 15 per apple and plans to sell them at a 13% profit. How many apples must he sell to make a total profit of 195?", exam: "[RRB GROUP-D 2025]", options: ["110", "195", "95", "100"], correct: 3 },
+        { q: "96. Samreen sells a keyboard for 1,260 at a profit of 25%, and another keyboard for 1,440 at a loss of 10%. What is her total gain or loss percentage?", exam: "(SSC CGL 2024 Pre)", options: ["3 86/133% Loss", "3 11/27% Gain", "3 11/27% loss", "3 86/163% gain"], correct: 1 },
+        { q: "97. A merchant sells 195 kg of wheat for Rs. 10260 a profit of Rs. 4.50 per kg of wheat. What is the cost price (in Rs.) of 15 kg of wheat?", exam: "(SSC CHSL PRE 2024)", options: ["722", "682", "595", "750"], correct: 0 },
+        { q: "98. Oil equal to 20% of the weight of ground nut is extracted in a mill. The matter left after extraction is sold as cattle feed at the rate of Rs. 12.5/kg. the groundnuts are bought at Rs. 20/kg. The processing cost is Rs. 5/kg. At what price (Rs. per kg) should the oil be sold to earn 20% profit on total costs (Total cost = Cost of groundnuts and processing costs)?", exam: "", options: ["250", "150", "200", "100"], correct: 3 },
+        { q: "99. The cost of 2.5 kg rice is Rs.125. The cost of 9 kg rice is equal to that of 4 kg pulses. The cost of 14 kg pulses is equal to that of 1.5 kg tea. The cost of 2 kg tea is equal to that of 5 kg nuts. What is the cost of 11 kg nuts?", exam: "(CDS 2016)", options: ["Rs. 2310", "Rs. 3190", "Rs. 4070", "Rs. 4620"], correct: 3 }
+    ];
+
+    let currentScore = 0;
+    const totalQuestions = quizData.length;
+    const labels = ["A. ", "B. ", "C. ", "D. "];
+
+    const quizListElement = document.getElementById("quiz-list");
+    document.getElementById("total-score").innerText = totalQuestions;
+
+    quizData.forEach((data, qIndex) => {
+        const card = document.createElement("div");
+        card.className = "question-card";
+
+        const questionText = document.createElement("h3");
+        questionText.className = "question-text";
+        
+        if (data.exam) {
+            questionText.innerHTML = `${data.q} <span class="exam-tag">${data.exam}</span>`;
+        } else {
+            questionText.innerText = data.q;
+        }
+        
+        card.appendChild(questionText);
+
+        const optionsGrid = document.createElement("div");
+        optionsGrid.className = "options-grid";
+
+        const feedbackBox = document.createElement("div");
+        feedbackBox.className = "feedback-box";
+
+        data.options.forEach((optionText, oIndex) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = labels[oIndex] + optionText;
+
+            btn.onclick = () => handleAnswer(btn, oIndex, data.correct, optionsGrid, feedbackBox, data);
+            
+            optionsGrid.appendChild(btn);
+        });
+
+        card.appendChild(optionsGrid);
+        card.appendChild(feedbackBox);
+        quizListElement.appendChild(card);
+    });
+
+    function handleAnswer(selectedBtn, selectedIndex, correctIndex, optionsGrid, feedbackBox, data) {
+        const allButtons = optionsGrid.querySelectorAll(".option-btn");
+
+        allButtons.forEach(btn => btn.disabled = true);
+
+        if (selectedIndex === correctIndex) {
+            selectedBtn.classList.add("correct");
+            currentScore++;
+            feedbackBox.innerText = `Correct!`;
+        } else {
+            selectedBtn.classList.add("wrong");
+            allButtons[correctIndex].classList.add("correct");
+            feedbackBox.innerText = `Incorrect. The correct answer is ${labels[correctIndex]} ${data.options[correctIndex]}`;
+            feedbackBox.style.color = "#991b1b";
+            feedbackBox.style.backgroundColor = "#fee2e2";
+        }
+
+        feedbackBox.style.display = "block";
+    }
+
+    function showFinalScore() {
+        document.getElementById("submit-btn").style.display = "none";
+        document.getElementById("final-score").innerText = currentScore;
+        document.getElementById("final-score-container").style.display = "block";
+        
+        document.getElementById("final-score-container").scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+</script>
+
+</body>
+</html>
